@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+// Recursive Top Down approach
+int knapSack(int wts[], int prices[], int n, int w){
+    if(n==0 || w==0){return 0;}
+    
+    int include=0, exclude=0;
+    int result=0;
+    if(wts[n-1] <= w){
+        include = prices[n-1] + knapSack(wts, prices, n-1, w-wts[n-1]);
+    }
+    exclude = knapSack(wts, prices, n-1, w);
+    if(include>exclude){
+        result = include;
+    }
+    else{
+        result = exclude;
+    }
+    return result;
+}
+int main() {
+
+    int n, w;
+    scanf("%d",&n);
+    scanf("%d", &w);
+    
+    int wts[n], prices[n];
+    for(int i=0;i<n;i++){
+        scanf("%d", &wts[i]);
+    }
+    for(int i=0;i<n;i++){
+        scanf("%d", &prices[i]);
+    }   
+    printf("%d",knapSack(wts, prices, n, w));   
+}
